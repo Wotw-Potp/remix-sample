@@ -10,21 +10,14 @@ export default function Breadcrumb({ breadcrumbs }: ComponentProps) {
 		<>
 			{breadcrumbs.length > 0 && (
 				<nav className="flex flex-wrap gap-3 text-sm text-slate-500">
-					{breadcrumbs.map((breadcrumb, idx, self) => (
-						<>
-							<Link
-								key={breadcrumb.path}
-								to={breadcrumb.path}
-								className="font-bold underline underline-offset-2 hover:no-underline"
-							>
-								{`< ${breadcrumb.label}`}
-							</Link>
-							{idx !== self.length - 1 && (
-								<span key={breadcrumb.label} className="font-bold">
-									/
-								</span>
-							)}
-						</>
+					{breadcrumbs.map((breadcrumb) => (
+						<Link
+							key={breadcrumb.path}
+							to={breadcrumb.path}
+							className="font-bold underline underline-offset-2 hover:no-underline"
+						>
+							{`< ${breadcrumb.label}`}
+						</Link>
 					))}
 				</nav>
 			)}
