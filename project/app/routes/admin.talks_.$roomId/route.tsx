@@ -2,11 +2,12 @@ import {
 	type ActionFunctionArgs,
 	json,
 	type LoaderFunctionArgs,
-	redirect,
+	redirectDocument,
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getRoomById } from "~/services/talkService.server";
 import MessageForm from "./components/MessageForm";
+import MessageItem from "./components/MessageItem";
 import { routes } from "~/libs/routes";
 import {
 	createMessage,
@@ -35,7 +36,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
 		return json({ status, message }, { status });
 	}
 
-	return redirect(`${routes.admin.TALKS}/${roomId}`, { status });
+	return redirectDocument(`${routes.admin.TALKS}/${roomId}`);
 }
 /* loader */
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -60,32 +61,11 @@ export default function AdminTalkRoomRoute() {
 			<div className="grow">
 				<div className="grid gap-8">
 					{messages.map((message) => (
-						<div
+						<MessageItem
 							key={message.id}
-							className={`flex gap-4 items-center ${
-								message.authorId === userId ? "flex-row-reverse" : "flex-row"
-							}`}
-						>
-							<div className="shrink-0 flex flex-col gap-2 items-center">
-								<div className="w-12 h-12 rounded-full overflow-hidden">
-									<picture>
-										<img
-											src="https://picsum.photos/200/200"
-											alt={message.author.name}
-											loading="lazy"
-										/>
-									</picture>
-								</div>
-								<div className="text-xs text-slate-700 font-bold text-center">
-									{message.author.name}
-								</div>
-							</div>
-							<div className="basis-[52ch] grow-0">
-								<div className="bg-white p-3 rounded-lg whitespace-pre break-all">
-									{message.content}
-								</div>
-							</div>
-						</div>
+							message={message}
+							isMine={message.authorId === userId}
+						/>
 					))}
 				</div>
 			</div>

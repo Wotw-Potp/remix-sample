@@ -59,7 +59,7 @@ export default function AdminLayout() {
 					<div className="basis-[28ch] shrink-0">
 						<Sidebar />
 					</div>
-					<div className="grow bg-slate-100">
+					<div className="grow bg-slate-100 overflow-y-scroll">
 						<Navbar />
 						<main className="py-8 px-10">
 							<div className="pb-3">

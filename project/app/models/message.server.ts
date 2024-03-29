@@ -11,8 +11,12 @@ export class MessageModel {
 		return MessageModel.instance;
 	}
 
-	async createMessage(args: Prisma.TalkMessageCreateArgs) {
+	async create(args: Prisma.TalkMessageCreateArgs) {
 		return await prisma.talkMessage.create(args);
+	}
+
+	async update(args: Prisma.TalkMessageUpdateArgs) {
+		return await prisma.talkMessage.update(args);
 	}
 
 	async findMany(args?: Prisma.TalkMessageFindManyArgs) {

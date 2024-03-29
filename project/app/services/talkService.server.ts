@@ -8,6 +8,7 @@ import type {
 	IGetMyRoomsResponse,
 	ICreateRoomResponse,
 	IFindOneRoomResponse,
+	IDeleteRoomResponse,
 } from "~/interfaces/talk.interface";
 
 const talkRoomModel = TalkRoomModel.getInstance();
@@ -24,6 +25,9 @@ export async function getMyRooms(
 						userId,
 					},
 				},
+			},
+			orderBy: {
+				updatedAt: "desc",
 			},
 		})) as TalkRoomWithUsers[];
 		return {
@@ -110,6 +114,28 @@ export async function getRoomById(
 		return {
 			errors: null,
 			message: "Failed to get room",
+			status: 500,
+		};
+	}
+}
+
+export async function deleteRoom(roomId: string): Promise<IDeleteRoomResponse> {
+	try {
+		await talkRoomModel.delete({
+			where: {
+				roomId,
+			},
+		});
+		return {
+			errors: null,
+			message: "Deleted room successfully",
+			status: 200,
+		};
+	} catch (error) {
+		console.error(error);
+		return {
+			errors: null,
+			message: "Failed to delete room",
 			status: 500,
 		};
 	}

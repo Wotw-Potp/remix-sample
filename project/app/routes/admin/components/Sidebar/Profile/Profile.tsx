@@ -1,4 +1,5 @@
 import type { User } from "@prisma/client";
+import AvatarImage from "~/assets/avatar-placeholder.jpg";
 
 interface ComponentProps {
 	name: User["name"];
@@ -11,7 +12,7 @@ export default function SidebarProfile({ name, role }: ComponentProps) {
 			<div className="rounded-full overflow-hidden aspect-square max-w-20 mx-auto">
 				<picture>
 					<img
-						src="https://picsum.photos/200/200"
+						src={AvatarImage}
 						alt="sample"
 						className="w-full h-full object-cover"
 					/>
