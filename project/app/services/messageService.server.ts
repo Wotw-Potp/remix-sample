@@ -43,11 +43,23 @@ export async function createMessage(
 		if (!content) {
 			throw new Error("Content is required");
 		}
-		await messageModel.createMessage({
+		// Create message
+		const message = await messageModel.create({
 			data: {
 				content,
 				roomId,
 				authorId: userId,
+			},
+		});
+		// Update room's updatedAt
+		await messageModel.update({
+			where: { id: message.id },
+			data: {
+				room: {
+					update: {
+						updatedAt: new Date(),
+					},
+				},
 			},
 		});
 		return {

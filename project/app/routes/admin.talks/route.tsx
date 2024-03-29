@@ -2,7 +2,7 @@ import {
 	type ActionFunctionArgs,
 	json,
 	type LoaderFunctionArgs,
-	redirect,
+	redirectDocument,
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import PageHeading from "~/components/elements/heading/PageHeading";
@@ -24,7 +24,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	if (isInvaild) {
 		return json({ message }, { status });
 	}
-	return redirect(routes.admin.TALKS, { status });
+	return redirectDocument(routes.admin.TALKS);
 }
 /* loader */
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -59,7 +59,15 @@ export default function AdminTalksRoute() {
 				</div>
 			</div>
 			<div className="mt-5">
-				<TalkRoomListTable rooms={rooms} selfId={userId} />
+				{rooms.length > 0 ? (
+					<TalkRoomListTable rooms={rooms} selfId={userId} />
+				) : (
+					<div className="text-center text-xl text-slate-500">
+						You don&apos;t have any rooms yet.
+						<br />
+						Let&apos;s create one!
+					</div>
+				)}
 			</div>
 		</div>
 	);

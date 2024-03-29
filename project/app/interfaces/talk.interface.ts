@@ -17,3 +17,5 @@ export interface ICreateRoomResponse
 export interface IFindOneRoomResponse extends IBaseResponse<TalkRoomWithUsers> {
 	room?: TalkRoomWithUsersAndMessages;
 }
+
+export interface IDeleteRoomResponse extends IBaseResponse<null> {}

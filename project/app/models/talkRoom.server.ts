@@ -35,6 +35,10 @@ export class TalkRoomModel {
 	async findOne(args: Prisma.TalkRoomFindUniqueArgs) {
 		return await prisma.talkRoom.findUnique(args);
 	}
+
+	async delete(args: Prisma.TalkRoomDeleteArgs) {
+		return await prisma.talkRoom.delete(args);
+	}
 }
 
 export type TalkRoomWithUsers = Prisma.TalkRoomGetPayload<{
