@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  remix-sample-node:
+    container_name: remix-sample-node__container
+    image: node:latest
+    volumes:
+      - type: bind
+        source: "./project"
+        target: "/project"
+    working_dir: "/project"
+    ports:
+      - "3000:3000" # for web-front
+      - "3001:3001" # for HMR
+      - "6006:6006" # for storybook
+      - "1001:1001" # for prisma studio
+    tty: true
+    env_file:
+      - ".env"
+    depends_on:
+      - remix-sample-database
+
+  remix-sample-database:
+    container_name: ${DATABASE_HOST:-remix-sample-database__container}
+    image: mysql:latest
+    platform: linux/x86_64
+    restart: always
+    volumes:
+      - type: bind
+        source: "./.docker/mysql/local/data"
+        target: "/var/lib/mysql"
+      - type: bind
+        source: "./.docker/mysql/local/init"
+        target: "/docker-entrypoint-initdb.d"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
