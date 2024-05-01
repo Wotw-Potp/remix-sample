@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   remix-sample-node:
     container_name: remix-sample-node__container
